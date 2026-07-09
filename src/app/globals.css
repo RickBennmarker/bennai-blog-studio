@@ -1,0 +1,264 @@
+@import "tailwindcss";
+
+/* ─── BennAI SEO Agent design tokens (AI-Native UI, dark agent console) ─── */
+@theme {
+  --color-bg: #0b0e1a;
+  --color-surface: #12162a;
+  --color-surface-2: #1a2038;
+  --color-surface-3: #232b4a;
+  --color-border: #242c4c;
+  --color-border-strong: #374270;
+  --color-text: #e8eaf6;
+  --color-muted: #9aa0c0;
+  --color-faint: #626a92;
+  --color-primary: #8b5cf6;
+  --color-primary-strong: #7c3aed;
+  --color-accent: #ec4899;
+  --color-success: #34d399;
+  --color-warning: #fbbf24;
+  --color-danger: #f87171;
+
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  @apply bg-bg text-text antialiased;
+}
+
+/* Aurora: twee langzaam driftende gloedvelden achter alles. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -25%;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(38% 32% at 22% 18%, rgba(124, 58, 237, 0.16), transparent 70%),
+    radial-gradient(30% 28% at 82% 8%, rgba(236, 72, 153, 0.1), transparent 70%),
+    radial-gradient(26% 24% at 65% 85%, rgba(99, 102, 241, 0.08), transparent 70%);
+  animation: aurora-drift 26s ease-in-out infinite;
+}
+
+/* Filmkorrel: haalt de "gladde AI-look" eraf. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+  opacity: 0.032;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@keyframes aurora-drift {
+  0%, 100% { transform: translate3d(-2%, -1.5%, 0) scale(1); }
+  50% { transform: translate3d(3%, 2.5%, 0) scale(1.12); }
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+::selection {
+  background: rgba(139, 92, 246, 0.4);
+}
+
+/* ─── Componentklassen ─── */
+@layer components {
+  .card {
+    @apply rounded-2xl border border-border bg-surface;
+  }
+  .btn-primary {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-primary-strong px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-primary active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40;
+    box-shadow: 0 4px 20px -6px rgba(124, 58, 237, 0.5);
+  }
+  .btn-primary:hover {
+    box-shadow: 0 6px 28px -6px rgba(124, 58, 237, 0.65);
+  }
+  .btn-secondary {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-border bg-surface-2 px-4 py-2.5 text-sm font-medium text-text transition-all duration-200 hover:border-primary/40 hover:bg-surface-3 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40;
+  }
+  .btn-ghost {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium text-muted transition-all duration-200 hover:bg-surface-2 hover:text-text active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40;
+  }
+  .btn-success {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-success/15 px-5 py-2.5 text-sm font-semibold text-success ring-1 ring-success/30 transition-all duration-200 hover:bg-success/25 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40;
+  }
+  .btn-danger {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium text-danger/80 ring-1 ring-danger/20 transition-all duration-200 hover:bg-danger/10 hover:text-danger active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40;
+  }
+  .input {
+    @apply w-full rounded-xl border border-border bg-surface-2 p-3 text-sm text-text outline-none transition-colors duration-200 placeholder:text-faint focus:border-primary focus:ring-2 focus:ring-primary/25 disabled:opacity-50;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+  .label {
+    @apply block text-sm font-medium text-muted;
+  }
+  .sublabel {
+    @apply block text-xs font-medium text-faint;
+  }
+
+  /* Kaart die reageert: subtiele lift + gloed op hover. */
+  .card-lift {
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card-lift:hover {
+    transform: translateY(-2px);
+    border-color: rgba(139, 92, 246, 0.45);
+    box-shadow: 0 10px 34px -14px rgba(124, 58, 237, 0.4);
+  }
+
+  /* Gradient-tekst voor het accent in koppen. */
+  .text-gradient {
+    background: linear-gradient(92deg, #a78bfa 0%, #ec4899 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Fijn raster in de hero — leest als blauwdruk, niet als lege gradient. */
+  .grid-pattern {
+    background-image:
+      linear-gradient(rgba(139, 92, 246, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(139, 92, 246, 0.07) 1px, transparent 1px);
+    background-size: 34px 34px;
+    mask-image: radial-gradient(70% 90% at 30% 20%, black, transparent);
+  }
+
+  /* Agent-avatar met ademende, roterende gloed. */
+  .agent-avatar {
+    position: relative;
+    isolation: isolate;
+  }
+  .agent-avatar::before {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    z-index: -1;
+    border-radius: inherit;
+    background: conic-gradient(from 0deg, #7c3aed, #ec4899, #6366f1, #7c3aed);
+    filter: blur(9px);
+    opacity: 0.55;
+    animation: avatar-spin 9s linear infinite, avatar-breathe 3.5s ease-in-out infinite;
+  }
+}
+
+@keyframes avatar-spin {
+  to { rotate: 360deg; }
+}
+@keyframes avatar-breathe {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
+
+/* Staggered entrance: kinderen verschijnen 40ms na elkaar. */
+.stagger > * {
+  opacity: 0;
+  animation: fade-up 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.stagger > *:nth-child(1) { animation-delay: 0.04s; }
+.stagger > *:nth-child(2) { animation-delay: 0.08s; }
+.stagger > *:nth-child(3) { animation-delay: 0.12s; }
+.stagger > *:nth-child(4) { animation-delay: 0.16s; }
+.stagger > *:nth-child(5) { animation-delay: 0.2s; }
+.stagger > *:nth-child(6) { animation-delay: 0.24s; }
+.stagger > *:nth-child(7) { animation-delay: 0.28s; }
+.stagger > *:nth-child(8) { animation-delay: 0.32s; }
+.stagger > *:nth-child(9) { animation-delay: 0.36s; }
+.stagger > *:nth-child(10) { animation-delay: 0.4s; }
+.stagger > *:nth-child(n + 11) { animation-delay: 0.44s; }
+
+/* Slanke, donkere scrollbar. */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #232b4a;
+  border-radius: 8px;
+  border: 2px solid #0b0e1a;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #37427a;
+}
+
+/* ─── Agent-animaties ─── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+.reveal {
+  animation: fade-up 0.3s ease-out both;
+}
+
+@keyframes agent-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5); }
+  70% { box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
+}
+.pulse-dot {
+  animation: agent-pulse 2.4s ease-out infinite;
+}
+
+@keyframes typing {
+  0%, 60%, 100% { opacity: 0.25; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-3px); }
+}
+.typing-dot {
+  animation: typing 1.2s ease-in-out infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.15s; }
+.typing-dot:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.spinner {
+  animation: spin 0.8s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── Rendered blogpreview (dark) ─── */
+.blog-content {
+  @apply leading-relaxed text-text/90;
+}
+.blog-content h2 {
+  @apply mt-8 mb-3 text-2xl font-bold text-text;
+}
+.blog-content h3 {
+  @apply mt-6 mb-2 text-xl font-semibold text-text;
+}
+.blog-content p {
+  @apply my-4;
+}
+.blog-content ul {
+  @apply my-4 list-disc space-y-1 pl-6;
+}
+.blog-content ol {
+  @apply my-4 list-decimal space-y-1 pl-6;
+}
+.blog-content a {
+  @apply text-primary underline;
+}
+.blog-content blockquote {
+  @apply my-4 border-l-4 border-primary/40 pl-4 italic text-muted;
+}
+.blog-content strong {
+  @apply font-semibold text-text;
+}
+.blog-content code {
+  @apply rounded bg-surface-3 px-1 py-0.5 text-sm;
+}
