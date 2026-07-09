@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     }
     const settings = await getSettings();
 
-    // Ingeplande posts staan al als concept in Lovable → dat concept live zetten
+    // Ingeplande posts staan al als concept in het CMS → dat concept live zetten
     // (PATCH), niet opnieuw aanmaken (dat gaf een duplicate-slug fout).
     if (draft.status === "scheduled" || draft.published_post_id) {
       await publishScheduled(draft, settings);

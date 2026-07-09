@@ -4,7 +4,7 @@ import { scheduleDraft, unscheduleDraft } from "@/lib/publish";
 
 export const maxDuration = 60;
 
-/** Plant een draft in (push als concept naar Lovable + geplande tijd). */
+/** Plant een draft in (push als concept naar het CMS + geplande tijd). */
 export async function POST(req: NextRequest) {
   try {
     const { draftId, scheduledFor } = await req.json();

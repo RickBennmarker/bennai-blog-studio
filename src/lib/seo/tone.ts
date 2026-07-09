@@ -8,7 +8,7 @@ const SKIP = /\/(login|privacy|privacybeleid|cookie|voorwaarden|terms|kennisbank
 
 /**
  * Scant de hele site (pagina's + gepubliceerde blogs) en laat Claude er een
- * bruikbare tone-of-voice-beschrijving uit destilleren. Die kan Rick daarna in
+ * bruikbare tone-of-voice-beschrijving uit destilleren. Die kun je daarna in
  * Instellingen bewaren, zodat elke nieuwe blog in de stem van de site is.
  */
 export async function scanToneOfVoice(): Promise<string> {

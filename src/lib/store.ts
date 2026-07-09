@@ -5,8 +5,8 @@ import type { Analysis, Draft, LogEntry, Opportunity, Settings } from "./types";
 
 /**
  * Lokale opslag in JSON-bestanden onder ./data.
- * Lovable Cloud beheert de Supabase zelf, dus we hebben geen database-toegang;
- * drafts, instellingen en logs bewaren we daarom naast het dashboard.
+ * De app heeft geen eigen database; drafts, instellingen en logs bewaren we
+ * daarom in JSON-bestanden naast het dashboard.
  */
 const DATA_DIR = path.join(process.cwd(), "data");
 const FILES = {

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { testBlogConnection } from "@/lib/publish";
 
-/** Verbindingstest met de Lovable blog-publish API. */
+/** Verbindingstest met het gekoppelde CMS. */
 export async function GET() {
   try {
     const count = await testBlogConnection();

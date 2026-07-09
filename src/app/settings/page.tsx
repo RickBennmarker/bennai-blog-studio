@@ -475,7 +475,7 @@ export default function SettingsPage() {
               <input
                 value={settings.author}
                 onChange={(e) => set("author", e.target.value)}
-                placeholder="Bijv. Rick"
+                placeholder="Bijv. je merk of naam"
                 className="input mt-1"
               />
               <p className="mt-1 text-xs text-faint">
