@@ -3,9 +3,20 @@ import type { CmsProviderId } from "@/lib/types";
 import { IconLightbulb, IconExternal } from "./icons";
 
 /** Uitklapbare uitleg met genummerde stappen. Werkt zonder JS (native details). */
-function HelpBox({ title, children }: { title: string; children: ReactNode }) {
+function HelpBox({
+  title,
+  children,
+  defaultOpen = false,
+}: {
+  title: string;
+  children: ReactNode;
+  defaultOpen?: boolean;
+}) {
   return (
-    <details className="mt-3 rounded-xl border border-border bg-surface-2/50 text-sm">
+    <details
+      open={defaultOpen}
+      className="mt-3 rounded-xl border border-border bg-surface-2/50 text-sm"
+    >
       <summary className="flex cursor-pointer select-none items-center gap-2 px-4 py-3 font-medium text-text/90">
         <IconLightbulb className="h-4 w-4 shrink-0 text-warning" />
         {title}
@@ -53,10 +64,16 @@ export function OpenRouterHelp() {
 }
 
 /** Provider-specifieke uitleg voor het koppelen van het CMS. */
-export function CmsHelp({ provider }: { provider: CmsProviderId }) {
+export function CmsHelp({
+  provider,
+  defaultOpen = false,
+}: {
+  provider: CmsProviderId;
+  defaultOpen?: boolean;
+}) {
   if (provider === "wordpress") {
     return (
-      <HelpBox title="Hoe koppel ik WordPress? (stap voor stap)">
+      <HelpBox title="Hoe koppel ik WordPress? (stap voor stap)" defaultOpen={defaultOpen}>
         <p>
           Je maakt in WordPress een <strong>Application Password</strong> aan — een apart
           wachtwoord speciaal voor deze app. Je gewone wachtwoord heb je niet nodig.
@@ -94,7 +111,7 @@ export function CmsHelp({ provider }: { provider: CmsProviderId }) {
 
   if (provider === "shopify") {
     return (
-      <HelpBox title="Hoe koppel ik Shopify? (stap voor stap)">
+      <HelpBox title="Hoe koppel ik Shopify? (stap voor stap)" defaultOpen={defaultOpen}>
         <p>
           Je maakt in Shopify een eigen &quot;custom app&quot; aan en kopieert het
           toegangstoken daarvan.
@@ -139,7 +156,7 @@ export function CmsHelp({ provider }: { provider: CmsProviderId }) {
 
   if (provider === "custom") {
     return (
-      <HelpBox title="Wat is 'Ander systeem'?">
+      <HelpBox title="Wat is 'Ander systeem'?" defaultOpen={defaultOpen}>
         <p>
           Voor een eigen blog-API: een endpoint dat je zelf (of je ontwikkelaar) hebt gebouwd,
           bijv. een Supabase/Lovable edge function. Gebruik dit alleen als je zo&apos;n
