@@ -492,7 +492,7 @@ export default function SetupPage() {
             </div>
           )}
 
-          {provider && <CmsHelp provider={provider} />}
+          {provider && <CmsHelp key={provider} provider={provider} defaultOpen />}
 
           {provider && (
             <div className="mt-4">
